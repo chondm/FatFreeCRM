@@ -2,26 +2,11 @@ source 'http://rubygems.org'
 
 gem 'rails', '3.0.7'
 
+gem 'mysql2'
+
 # Loads the database adapter gem based on config/database.yml (Default: mysql2)
 # -----------------------------------------------------------------------------
-db_gems = {
-  "mysql2"     => [ "mysql2", "0.2.7" ],  # The latest 0.3.2 doesn't ship with ActiveRecord adapter as it's now part of Rails 3.1.
-  "mysql"      => [ "mysql" ],            # With Rails 3.0.x we're supposed to use mysql2 0.2.x release.
-  "postgresql" => [ "pg", ">= 0.9.0" ],
-  "sqlite3"    => [ "sqlite3" ]
-}
-adapter = if File.exists?(db_config = File.join(File.dirname(__FILE__),"config","database.yml"))
-  db = YAML.load_file(db_config)
-  # Fetch the first configured adapter from config/database.yml
-  (db["production"] || db["development"] || db["test"])["adapter"]
-else
-  "mysql2"
-end
-if db_gems[adapter]
-  gem *db_gems[adapter]
-else
-  raise "Sorry, the db adapter in database.yml is unknown. Please add it to 'db_gems' in your Gemfile."
-end
+
 # -----------------------------------------------------------------------------
 
 gem 'acts_as_commentable', '>= 3.0.1'
